@@ -1,0 +1,88 @@
+import { useState } from "react";
+import { api } from "../api";
+export function Coach({ sql, onClose }) {
+  const [action, setAction] = useState("explain"),
+    [text, setText] = useState(sql),
+    [reply, setReply] = useState(null),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  async function ask(e) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      setReply(await api("/coach", { action, text }));
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="overlay">
+      <aside
+        className="coach-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="SQL Coach"
+      >
+        <div className="drawer-heading">
+          <div>
+            <span className="eyebrow">A LITTLE GUIDANCE</span>
+            <h2>
+              SQL Coach <span>✧</span>
+            </h2>
+          </div>
+          <button onClick={onClose} aria-label="Close Coach">
+            ×
+          </button>
+        </div>
+        <p className="muted">
+          Learn the reasoning behind your query. Local rules work offline;
+          optional AI uses the server.
+        </p>
+        <form onSubmit={ask}>
+          <label>
+            What would you like help with?
+            <select value={action} onChange={(e) => setAction(e.target.value)}>
+              <option value="explain">Explain this query</option>
+              <option value="optimize">Suggest improvements</option>
+              <option value="error">Explain an error</option>
+              <option value="hint">Give a practice hint</option>
+              <option value="generate">Plain English → SQL</option>
+            </select>
+          </label>
+          <label>
+            Your query or question
+            <textarea
+              aria-label="Coach question"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              rows={8}
+              maxLength={6000}
+            />
+          </label>
+          <button className="primary" disabled={busy}>
+            {busy ? "Thinking…" : "Ask Coach →"}
+          </button>
+        </form>
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
+        {reply && (
+          <div className="coach-response">
+            <span className="tag">{reply.provider}</span>
+            <p className="muted">{reply.reason}</p>
+            <pre>{reply.text}</pre>
+          </div>
+        )}
+        <p className="fine-print">
+          Local Coach is deterministic, not an LLM. Review every suggestion
+          before executing SQL.
+        </p>
+      </aside>
+    </div>
+  );
+}

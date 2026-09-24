@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+server/data/
+dist/
+.demo/
+coverage/
+*.db
+*.db-*
+*.log
+.DS_Store
+.pats
+test-results/
