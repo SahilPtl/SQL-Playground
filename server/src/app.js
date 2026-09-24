@@ -127,23 +127,19 @@ app.post(
         )
         .get(req.user.id, Date.now())
     )
-      return res
-        .status(403)
-        .json({
-          error:
-            "AI Coach is disabled during an active Interview attempt. Submit the attempt or wait for it to expire.",
-        });
+      return res.status(403).json({
+        error:
+          "AI Coach is disabled during an active Interview attempt. Submit the attempt or wait for it to expire.",
+      });
     const { action, text } = req.body;
     if (
       !["explain", "hint", "optimize", "generate", "error"].includes(action) ||
       typeof text !== "string" ||
       text.length > 6000
     )
-      return res
-        .status(400)
-        .json({
-          error: "Choose a Coach action and enter at most 6000 characters.",
-        });
+      return res.status(400).json({
+        error: "Choose a Coach action and enter at most 6000 characters.",
+      });
     const schema = await execute(
       { action: "schema", file: workspacePath(req.user.id) },
       req.user.id,
@@ -161,12 +157,10 @@ app.get("/{*path}", (_req, res) =>
 app.use((error, req, res, _next) => {
   const status =
     error.status || (error.type === "entity.too.large" ? 413 : 500);
-  res
-    .status(status)
-    .json({
-      error:
-        status < 500
-          ? error.message
-          : "Server could not complete this request. Check the local server and retry.",
-    });
+  res.status(status).json({
+    error:
+      status < 500
+        ? error.message
+        : "Server could not complete this request. Check the local server and retry.",
+  });
 });

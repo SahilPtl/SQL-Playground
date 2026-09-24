@@ -13,6 +13,16 @@ export function Editor({ value, onChange, onRun }) {
       doc: value,
       parent: host.current,
       extensions: [
+        // Custom bindings precede basicSetup's default Mod-Enter blank line.
+        keymap.of([
+          {
+            key: "Mod-Enter",
+            run: () => {
+              callbacks.current.onRun();
+              return true;
+            },
+          },
+        ]),
         basicSetup,
         sql(),
         oneDark,
@@ -33,15 +43,6 @@ export function Editor({ value, onChange, onRun }) {
           if (update.docChanged)
             callbacks.current.onChange(update.state.doc.toString());
         }),
-        keymap.of([
-          {
-            key: "Mod-Enter",
-            run: () => {
-              callbacks.current.onRun();
-              return true;
-            },
-          },
-        ]),
       ],
     });
     return () => view.current.destroy();

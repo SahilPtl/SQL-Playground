@@ -66,14 +66,12 @@ interviewRouter.post("/challenges/:id/start", (req, res) => {
       .run(req.user.id, c.id, now, now + c.durationSeconds * 1000)
       .lastInsertRowid;
   })();
-  res
-    .status(201)
-    .json({
-      attempt: appDb
-        .prepare("SELECT * FROM interview_attempts WHERE id=?")
-        .get(id),
-      serverNow: now,
-    });
+  res.status(201).json({
+    attempt: appDb
+      .prepare("SELECT * FROM interview_attempts WHERE id=?")
+      .get(id),
+    serverNow: now,
+  });
 });
 function activeAttempt(req, res) {
   const attempt = appDb

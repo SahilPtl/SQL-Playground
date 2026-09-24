@@ -27,13 +27,11 @@ test("invalid optional credentials do not prevent local signup, SQL, Coach or In
   );
   assert.equal(
     (
-      await agent
-        .post("/api/auth/register")
-        .send({
-          name: "Invalid config learner",
-          email: "invalid-config@example.test",
-          password: "Testing2026!",
-        })
+      await agent.post("/api/auth/register").send({
+        name: "Invalid config learner",
+        email: "invalid-config@example.test",
+        password: "Testing2026!",
+      })
     ).status,
     200,
   );
@@ -87,12 +85,10 @@ test("invalid optional credentials do not prevent local signup, SQL, Coach or In
   await agent.post("/api/auth/logout").send({});
   assert.equal(
     (
-      await agent
-        .post("/api/auth/login")
-        .send({
-          email: "invalid-config@example.test",
-          password: "Testing2026!",
-        })
+      await agent.post("/api/auth/login").send({
+        email: "invalid-config@example.test",
+        password: "Testing2026!",
+      })
     ).status,
     200,
   );

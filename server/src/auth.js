@@ -122,11 +122,9 @@ authRouter.post("/register", loginLimit, async (req, res, next) => {
     password.length < 10 ||
     Buffer.byteLength(password) > 72
   )
-    return res
-      .status(400)
-      .json({
-        error: "Use a name, valid email, and a password of 10–72 bytes.",
-      });
+    return res.status(400).json({
+      error: "Use a name, valid email, and a password of 10–72 bytes.",
+    });
   const normalized = email.trim().toLowerCase();
   const hash = await bcrypt.hash(password, 12);
   try {

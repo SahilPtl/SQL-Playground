@@ -152,14 +152,12 @@ export function getSchema(db) {
   return {
     tables: tables.map(({ name }) => ({
       name,
-      columns: db
-        .pragma(`table_info(${quote(name)})`)
-        .map((c) => ({
-          name: c.name,
-          type: c.type,
-          primaryKey: Boolean(c.pk),
-          notNull: Boolean(c.notnull),
-        })),
+      columns: db.pragma(`table_info(${quote(name)})`).map((c) => ({
+        name: c.name,
+        type: c.type,
+        primaryKey: Boolean(c.pk),
+        notNull: Boolean(c.notnull),
+      })),
       foreignKeys: db
         .pragma(`foreign_key_list(${quote(name)})`)
         .map((f) => ({ from: f.from, table: f.table, to: f.to })),
