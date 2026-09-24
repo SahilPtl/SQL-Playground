@@ -13,6 +13,8 @@ export const config = {
   googleCallback: process.env.GOOGLE_CALLBACK_URL?.trim(),
   openaiKey: process.env.OPENAI_API_KEY?.trim(),
   openaiModel: process.env.OPENAI_MODEL || "gpt-4.1-mini",
+  geminiKey: process.env.GEMINI_API_KEY?.trim(),
+  geminiModel: process.env.GEMINI_MODEL?.trim() || "gemini-3.5-flash-lite",
 };
 export const googleEnabled = Boolean(
   config.googleId &&

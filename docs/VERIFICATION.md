@@ -1,5 +1,11 @@
 # Verification record
 
+## Gemini Coach follow-up
+
+On 25 September 2026, `feature/gemini-coach` passed **24 backend tests**, the production build and static-serving smoke check. Six added tests cover Gemini selection, server-only header authentication, prompt/schema scope, error and quota recovery, blocked/empty responses, bounded output, offline behavior, route authentication and interview restrictions. Existing tests explicitly clear Gemini credentials so local `.env` values cannot trigger live calls during the suite.
+
+A live request using the locally configured key and `gemini-3.5-flash-lite` returned HTTP 200. Browser testing also displayed **Gemini Coach** with an explanation of the sample employee/department JOIN. The key remains in ignored `.env`; no credential is stored in source or this record.
+
 ## Google sign-in side-branch follow-up
 
 Live Google sign-in completed on 25 September 2026 after credentials were imported into the ignored local `.env`. The browser reached authenticated Practice, the sample JOIN returned eight rows, and the session survived a page reload. The user then approved merging into main. No credential or personal account information is included in this record. Valid-key OpenAI generation is still unverified.

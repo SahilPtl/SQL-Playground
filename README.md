@@ -54,7 +54,7 @@ The CLI refuses while demo ports are listening. It moves `server/data` into a ti
 - Actual SELECT/INSERT/UPDATE/DELETE/DDL, quote/comment-aware multi-statement processing, timings, affected rows, error statement/start line and predictable partial failure.
 - Practice examples, Ctrl+Enter, Clear, refresh and confirmed reset.
 - Eight Easy/Medium/Hard challenges; sample Run versus hidden Submit; server deadlines, ownership checks, tracked attempts, scoring and all-time progress.
-- Local Coach for explanations, basic improvement/error hints and limited English-to-SQL templates. Optional server-only OpenAI gracefully falls back.
+- Local Coach for explanations, basic improvement/error hints and limited English-to-SQL templates. Optional server-only Gemini or OpenAI supports AI guidance and falls back locally when unavailable.
 - Optional Google OAuth routes/button enabled only with complete configuration.
 - Bounded worker processes, input/output/storage limits, restricted SQL commands, Origin policy, Helmet and throttling. This is **not yet a public hostile-user sandbox**.
 
@@ -125,6 +125,8 @@ No variables are mandatory for local development. The root `.env.example` docume
 | GOOGLE_CALLBACK_URL                     | Must match the authorized callback port/origin                                                 |
 | OPENAI_API_KEY                          | Blank selects Local Coach; invalid/unavailable provider also falls back                        |
 | OPENAI_MODEL                            | `gpt-4.1-mini` by default; successful valid-key flow unverified                                |
+| GEMINI_API_KEY                          | Enables Gemini Coach; takes precedence over OpenAI, with local fallback on failure             |
+| GEMINI_MODEL                            | `gemini-3.5-flash-lite` by default; configurable for your project's available text models      |
 | NODE_ENV                                | Production requires HTTPS CLIENT_URL and secure secret, disables demo seeding                  |
 
 Exact optional setup: [OAUTH_AND_AI.md](docs/OAUTH_AND_AI.md). API routes/schema/scoring: [API.md](docs/API.md).

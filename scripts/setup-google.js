@@ -13,6 +13,8 @@ GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK_URL=http://localhost:15001/api/auth/google/callback
 OPENAI_API_KEY=
 OPENAI_MODEL=gpt-4.1-mini
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.5-flash-lite
 `;
 try {
   writeFileSync(envFile, template, { flag: "wx", mode: 0o600 });
