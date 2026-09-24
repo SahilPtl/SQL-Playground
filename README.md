@@ -1,5 +1,7 @@
 # SQL Playground
 
+**Google sign-in trial branch:** see [GOOGLE_SIGNIN_TRIAL.md](docs/GOOGLE_SIGNIN_TRIAL.md) for the separate checkout on ports **15174/15001**, Google OAuth setup and OpenAI API key instructions. Leave this branch unmerged until the live trial is approved.
+
 A real SQL learning workspace: four-pane React IDE, persistent SQLite database per user, eight timed challenges with server-held grading datasets, and an offline Local Coach. Rebuilt with Codex assistance on **25 September 2026 (Asia/Kolkata)**. Earlier repository history is preserved; see [the honest rebuild record](docs/REBUILD.md).
 
 ## Start here - this Windows laptop

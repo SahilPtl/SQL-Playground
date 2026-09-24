@@ -1,5 +1,9 @@
 # Verification record
 
+## Google sign-in side-branch follow-up
+
+On `feature/google-signin-setup`, `npm run check` passed **18 tests**, the production build and static-serving smoke. Four added Google callback integration tests use simulated provider transport with real Passport state/profile/session handling. They verify successful and repeat login, persistent workspaces, isolation, safe session fields, logout cookie clearing, local-account collisions, invalid/replayed state, cancellation and token failure. They do not establish live Google credential validity. See [the trial guide](GOOGLE_SIGNIN_TRIAL.md) for separate ports, data and cookie configuration. The rebuild record below describes the original 14-test milestone.
+
 Local work date: **25 September 2026, Asia/Kolkata** (GitHub stores corresponding UTC timestamps). Machine: Windows PowerShell; system Node 20.16; execution/install runtime Node 24.19; npm lockfile committed; better-sqlite3 pinned to 12.8.0; Vite 8.3.1. No `.env` or valid Google/OpenAI credential was used for the core walkthrough.
 
 ## Implemented and verified

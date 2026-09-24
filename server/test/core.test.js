@@ -7,6 +7,8 @@ import request from "supertest";
 import Database from "better-sqlite3";
 process.env.DATA_DIR = mkdtempSync(path.join(tmpdir(), "sql-playground-test-"));
 process.env.NODE_ENV = "test";
+process.env.CLIENT_URL = "http://localhost:5173";
+process.env.SESSION_COOKIE_NAME = "sql.sid";
 process.env.GOOGLE_CLIENT_ID = "";
 process.env.GOOGLE_CLIENT_SECRET = "";
 process.env.GOOGLE_CALLBACK_URL = "";

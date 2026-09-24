@@ -7,6 +7,7 @@ export const config = {
   production: process.env.NODE_ENV === "production",
   port: Number(process.env.PORT || 5000),
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+  sessionCookieName: process.env.SESSION_COOKIE_NAME || "sql.sid",
   googleId: process.env.GOOGLE_CLIENT_ID?.trim(),
   googleSecret: process.env.GOOGLE_CLIENT_SECRET?.trim(),
   googleCallback: process.env.GOOGLE_CALLBACK_URL?.trim(),

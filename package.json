@@ -5,6 +5,7 @@
   "description": "Offline-first SQL learning IDE with isolated SQLite workspaces",
   "scripts": {
     "setup": "node scripts/runtime.js scripts/setup.js",
+    "setup:google": "node scripts/runtime.js scripts/setup-google.js",
     "dev": "node scripts/runtime.js scripts/demo.js",
     "demo": "node scripts/runtime.js scripts/demo.js",
     "stop": "node scripts/runtime.js scripts/stop.js",
