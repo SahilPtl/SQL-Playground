@@ -67,7 +67,7 @@ if (googleEnabled)
               email &&
               appDb.prepare("SELECT id FROM users WHERE email=?").get(email)
             )
-              return done(null, false);
+              return done(null, false, { code: "google_account" });
             const result = appDb
               .prepare("INSERT INTO users(name,email,google_id) VALUES(?,?,?)")
               .run(profile.displayName || "Learner", email, profile.id);
@@ -164,7 +164,9 @@ authRouter.post("/logout", requireAuth, (req, res, next) =>
     if (error) return next(error);
     req.session.destroy((error) => {
       if (error) return next(error);
-      res.clearCookie("sql.sid", { path: "/" }).json({ ok: true });
+      res
+        .clearCookie(config.sessionCookieName, { path: "/" })
+        .json({ ok: true });
     });
   }),
 );
@@ -174,12 +176,16 @@ if (googleEnabled) {
     passport.authenticate("google", { scope: ["profile", "email"] }),
   );
   authRouter.get("/google/callback", (req, res, next) => {
-    const failure = () =>
-      res.redirect(config.clientUrl + "/login?error=google");
-    if (req.query.error || !req.query.code || !req.query.state)
-      return failure();
-    passport.authenticate("google", (error, user) => {
-      if (error || !user) return failure();
+    const failure = (code = "google") =>
+      res.redirect(config.clientUrl + "/login?error=" + code);
+    if (req.query.error === "access_denied") return failure("google_denied");
+    if (req.query.error) return failure();
+    if (!req.query.code || !req.query.state) return failure("google_state");
+    passport.authenticate("google", (error, user, info) => {
+      if (error || !user)
+        return failure(
+          info?.code === "google_account" ? "google_account" : "google",
+        );
       req.logIn(user, (error) =>
         error
           ? failure()

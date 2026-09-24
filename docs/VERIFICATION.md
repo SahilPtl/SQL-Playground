@@ -1,5 +1,11 @@
 # Verification record
 
+## Google sign-in side-branch follow-up
+
+Live Google sign-in completed on 25 September 2026 after credentials were imported into the ignored local `.env`. The browser reached authenticated Practice, the sample JOIN returned eight rows, and the session survived a page reload. The user then approved merging into main. No credential or personal account information is included in this record. Valid-key OpenAI generation is still unverified.
+
+On `feature/google-signin-setup`, `npm run check` passed **18 tests**, the production build and static-serving smoke. Four added Google callback integration tests use simulated provider transport with real Passport state/profile/session handling. They verify successful and repeat login, persistent workspaces, isolation, safe session fields, logout cookie clearing, local-account collisions, invalid/replayed state, cancellation and token failure. They do not establish live Google credential validity. See [the trial guide](GOOGLE_SIGNIN_TRIAL.md) for separate ports, data and cookie configuration. The rebuild record below describes the original 14-test milestone.
+
 Local work date: **25 September 2026, Asia/Kolkata** (GitHub stores corresponding UTC timestamps). Machine: Windows PowerShell; system Node 20.16; execution/install runtime Node 24.19; npm lockfile committed; better-sqlite3 pinned to 12.8.0; Vite 8.3.1. No `.env` or valid Google/OpenAI credential was used for the core walkthrough.
 
 ## Implemented and verified
@@ -33,7 +39,6 @@ Automated suite: **14 backend tests**, using disposable temporary application DB
 
 ## Implemented but unverified in the live external environment
 
-- Successful Google OAuth consent, token exchange and profile retrieval: no valid OAuth client credentials available. Redirect/rejection behavior was tested.
 - Successful OpenAI generation using a valid key: no valid key available. A mocked successful response tests only the adapter.
 - Production HTTPS/reverse proxy, secure-cookie deployment, backup/restore operations on a cloud host: documented design, not provisioned.
 - A real WSL desktop/browser walkthrough: not performed. Remote Linux CI status must be checked separately.

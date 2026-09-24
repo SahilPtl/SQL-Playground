@@ -52,7 +52,7 @@ app.get("/api/health", (_req, res) =>
 );
 app.use(
   session({
-    name: "sql.sid",
+    name: config.sessionCookieName,
     secret: sessionSecret(),
     store: new SQLiteSessionStore(),
     resave: false,

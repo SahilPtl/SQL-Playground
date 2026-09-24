@@ -83,6 +83,16 @@ function AuthPage({ register = false, auth, setAuth }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const location = useLocation();
+  const googleError = {
+    google:
+      "Google sign-in could not be completed. Try again, or use email/password.",
+    google_denied:
+      "Google sign-in was cancelled. Try again, or use email/password.",
+    google_state:
+      "This Google sign-in request is incomplete or expired. Start again with Continue with Google.",
+    google_account:
+      "An account already uses this email. Sign in with your existing password; Google accounts are not linked automatically.",
+  }[new URLSearchParams(location.search).get("error")];
   async function submit(e) {
     e.preventDefault();
     setBusy(true);
@@ -203,10 +213,9 @@ function AuthPage({ register = false, auth, setAuth }) {
                   : "Sign in →"}
             </button>
           </form>
-          {(error || location.search.includes("error=google")) && (
+          {(error || googleError) && (
             <p className="error" role="alert">
-              {error ||
-                "Google sign-in was rejected or could not be completed. Use email/password or check the OAuth setup."}
+              {error || googleError}
             </p>
           )}
           <div className="auth-divider">or</div>
@@ -220,11 +229,19 @@ function AuthPage({ register = false, auth, setAuth }) {
               Continue with Google
             </a>
           ) : (
-            <p className="fine-print">
-              Google sign-in is optional and not configured.
-              <br />
-              Email/password and the local demo work offline.
-            </p>
+            <>
+              <button
+                className="wide"
+                disabled
+                aria-describedby="google-unavailable"
+              >
+                Continue with Google
+              </button>
+              <p className="fine-print" id="google-unavailable">
+                Google sign-in is not available yet. Email/password and the
+                local demo work offline.
+              </p>
+            </>
           )}
           <p className="auth-switch">
             {register ? "Already have a workspace?" : "New here?"}{" "}
