@@ -39,7 +39,8 @@ export function Coach({ sql, onClose }) {
         </div>
         <p className="muted">
           Learn the reasoning behind your query. Local rules work offline;
-          optional AI uses the server.
+          optional AI receives your question and practice schema through the
+          server. Query result rows are not sent automatically.
         </p>
         <form onSubmit={ask}>
           <label>

@@ -51,6 +51,8 @@ Try cancelling a Google login when Google offers that action. The local page sho
 
 ## Get an OpenAI API key (optional)
 
+For Gemini instead, follow [Gemini SQL Coach setup](OAUTH_AND_AI.md#gemini-sql-coach). A configured Gemini key takes precedence over OpenAI.
+
 1. Sign in to the [OpenAI API platform](https://platform.openai.com/), select your project and open [API keys](https://platform.openai.com/api-keys).
 2. Create a new secret key and save it privately. Complete any access/billing setup the platform requires; creating a key alone does not prove usable API access.
 3. Fill `OPENAI_API_KEY` in this checkout's `.env`. Keep `OPENAI_MODEL=gpt-4.1-mini` unless you deliberately choose another compatible model available to your project.

@@ -13,6 +13,7 @@ process.env.GOOGLE_CLIENT_SECRET = "invalid-secret";
 process.env.GOOGLE_CALLBACK_URL =
   "http://localhost:5000/api/auth/google/callback";
 process.env.OPENAI_API_KEY = "deliberately-invalid-key";
+process.env.GEMINI_API_KEY = "";
 const { app } = await import("../src/app.js");
 const { appDb } = await import("../src/database.js");
 const { challenges } = await import("../src/challenges.js");

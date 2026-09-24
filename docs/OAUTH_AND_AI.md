@@ -2,7 +2,19 @@
 
 Use [the step-by-step setup guide](GOOGLE_SIGNIN_TRIAL.md) for the configured main checkout, ports **15174/15001**, Google credentials and OpenAI key creation.
 
-No `.env` is needed for local signup, login, SQL, Practice, Interview or Local Coach. Leave `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `OPENAI_API_KEY` blank in `.env.example`. Never prefix secrets with `VITE_`.
+No `.env` is needed for local signup, login, SQL, Practice, Interview or Local Coach. Credential placeholders in `.env.example` stay blank. Never prefix secrets with `VITE_`.
+
+## Gemini SQL Coach
+
+Create a key in [Google AI Studio](https://aistudio.google.com/api-keys), then add `GEMINI_API_KEY` to your private root `.env`. `GEMINI_MODEL` defaults to `gemini-3.5-flash-lite`; set it explicitly if you choose a different text model available to your project. Restart with `npm run stop` followed by `npm run dev`. Open Practice → SQL Coach and ask a question. Successful answers are labeled **Gemini Coach**.
+
+Gemini takes precedence when both Gemini and OpenAI keys are configured. If Gemini fails, the response falls back directly to **Local Coach**, without sending the question to OpenAI. With neither key, the Coach works offline. Google login uses separate OAuth credentials.
+
+Express calls Google's [generateContent API](https://ai.google.dev/api/generate-content) with the key in a server-side header, a 20-second timeout and a 2,048-token generation limit. Only the submitted question/action and current practice schema are sent; table rows, account details and hidden interview datasets are not automatically included. Review generated SQL before running it. Truncated answers are labeled; blocked or unusable answers fall back locally. Coach remains disabled during an active interview.
+
+Quota/rate limits, inaccessible models, invalid keys, network errors and provider outages produce safe explanations alongside Local Coach. Check your project's [AI Studio usage and limits](https://ai.google.dev/gemini-api/docs/rate-limits); free access and quota depend on the model and project. Credentials stay in ignored `.env`, never in client code, logs or Git.
+
+Live verification on 25 September 2026: the configured key and default model returned HTTP 200 with a SQL explanation through the real Gemini API. Tests separately cover provider selection, request scope, safe failure handling, blocked/empty responses, output limits, authentication and interview restrictions.
 
 ## Google OAuth setup (live local sign-in verified)
 

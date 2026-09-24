@@ -13,6 +13,7 @@ process.env.GOOGLE_CLIENT_ID = "";
 process.env.GOOGLE_CLIENT_SECRET = "";
 process.env.GOOGLE_CALLBACK_URL = "";
 process.env.OPENAI_API_KEY = "";
+process.env.GEMINI_API_KEY = "";
 const { app } = await import("../src/app.js");
 const { appDb, workspacePath } = await import("../src/database.js");
 const { splitSQL, runStatements } = await import("../src/sql.js");

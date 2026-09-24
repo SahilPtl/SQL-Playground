@@ -14,6 +14,7 @@ process.env.GOOGLE_CLIENT_SECRET = "test-only-secret";
 process.env.GOOGLE_CALLBACK_URL =
   "http://localhost:15001/api/auth/google/callback";
 process.env.OPENAI_API_KEY = "";
+process.env.GEMINI_API_KEY = "";
 const { app } = await import("../src/app.js");
 const { appDb } = await import("../src/database.js");
 const { passport } = await import("../src/auth.js");
