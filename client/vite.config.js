@@ -1,9 +1,14 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'node:url';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { fileURLToPath } from "node:url";
 export default defineConfig({
-  root: fileURLToPath(new URL('.', import.meta.url)),
+  root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [react()],
-  server: { host: '127.0.0.1', port: Number(process.env.FRONTEND_PORT || 5173), strictPort: true, proxy: { '/api': `http://127.0.0.1:${process.env.PORT || 5000}` } },
-  build: { outDir: '../dist', emptyOutDir: true }
+  server: {
+    host: "127.0.0.1",
+    port: Number(process.env.FRONTEND_PORT || 5173),
+    strictPort: true,
+    proxy: { "/api": `http://127.0.0.1:${process.env.PORT || 5000}` },
+  },
+  build: { outDir: "../dist", emptyOutDir: true },
 });

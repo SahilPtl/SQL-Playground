@@ -13,7 +13,10 @@
     "start": "node scripts/runtime.js server/src/server.js",
     "test": "node scripts/runtime.js --test --test-concurrency=1 server/test/*.test.js",
     "check": "npm test && npm run build",
-    "install:all": "npm install"
+    "install:all": "npm install",
+    "format": "node scripts/runtime.js node_modules/prettier/bin/prettier.cjs --write .",
+    "format:check": "node scripts/runtime.js node_modules/prettier/bin/prettier.cjs --check .",
+    "preview:check": "node scripts/runtime.js scripts/preview-check.js"
   },
   "keywords": [],
   "author": "",
@@ -44,6 +47,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.1.1",
+    "prettier": "^3.9.9",
     "supertest": "^7.1.4",
     "vite": "^8.3.1"
   }
