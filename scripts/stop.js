@@ -1,4 +1,4 @@
-import { readFileSync, rmSync } from "node:fs";
+import { readFileSync } from "node:fs";
 try {
   const { port, secret } = JSON.parse(
     readFileSync(".demo/control.json", "utf8"),

@@ -48,6 +48,8 @@ OS-enforced worker filesystem/native-memory/CPU quotas, distributed job queue an
 
 The workflow checks Node 24 on Windows and Ubuntu with clean `npm ci`, backend tests, build/static smoke and formatting. Consult the linked Actions checks on the delivery PR for the actual run result; workflow configuration alone is not verification. Final delivery notes report the observed remote check state.
 
+Observed remote result: [PR verification run 36053740539](https://github.com/SahilPtl/SQL-Playground/actions/runs/36053740539) completed successfully on **both windows-latest and ubuntu-latest** for commit `be01db192368fe18766d15304fd73dba13b163f5`. Every install, check and formatting step passed. Later documentation/cleanup commits trigger fresh checks; their status is visible on [PR #1](https://github.com/SahilPtl/SQL-Playground/pull/1).
+
 ## Known intentional limits
 
 No triggers, explicit multi-request transactions, ATTACH/VACUUM/file operations or writable PRAGMAs. Schema discovery caps ordinary tables at 100. Results cap rows and cell lengths. Error line refers to statement start, not exact character. Child-process isolation is not OS sandboxing. Hidden tests are excluded from browser data but visible in this public source repository. The Vite build may report a non-fatal large-chunk warning because CodeMirror and the app are bundled together.

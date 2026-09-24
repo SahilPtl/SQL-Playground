@@ -453,10 +453,6 @@ function InterviewDashboard() {
       .then(([c, p]) => setData({ ...c, ...p }))
       .catch((e) => setError(e.message));
   }, []);
-  const completed =
-    data?.attempts.filter((a) =>
-      ["passed", "failed", "expired"].includes(a.status),
-    ) || [];
   const solved = data?.summary.solved || 0;
   return (
     <main className="interview-page">
