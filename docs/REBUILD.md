@@ -10,8 +10,6 @@ Before replacing files, the exact original HEAD was saved remotely as [archive/p
 
 Authenticated GitHub work used only the connector verified as **SahilPtl** (ID 136913468). The repository owner and push URL were checked. Local author identity was set to `SahilPtl` with the GitHub numeric no-reply address. No PAT was found or required; no credential from another account was used.
 
-**Historical credential finding:** the original public history already tracked `backend/.env` with populated PostgreSQL connection fields, including PGPASSWORD. The values were not copied into the rebuilt source or displayed during inspection. That file is removed from the current tree, but remains in prior commits and the requested archival branch. Its validity was not tested. Rotate the old PostgreSQL credential if it is still valid; preserving history does not revoke an exposed credential.
-
 ## What to say in the interview
 
 “My earlier repository was a small PostgreSQL/Express scaffold. I rebuilt the current version with Codex assistance on 25 September 2026 to make the promised learning workflow real and testable. I did not develop this version over several earlier days. The rebuilt code uses React, Express, Passport and per-user SQLite files. I verified its behavior through backend tests and a browser demo, and I can walk through the query isolation, result comparison and timer logic. Google login and valid-key AI integration are implemented but I have not completed a live successful credentials-based test.”
