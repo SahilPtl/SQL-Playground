@@ -1,22 +1,22 @@
-# Google sign-in: side-branch trial
+# Google sign-in and local setup
 
-Branch: `feature/google-signin-setup`. Keep it separate until the live trial is complete and you explicitly choose to merge. Main is unchanged by this work.
+Developed and tested on `feature/google-signin-setup`; the user approved merging after the live Google login succeeded. The same configuration can be used from the main checkout. Keep the filename of this guide for existing links.
 
 Google sign-in needs an **OAuth client ID and client secret**, not a Google API key. The optional **OpenAI API key** is separate and enables model-generated Coach responses. Neither is needed for the offline demo.
 
-## Open the isolated checkout
+## Run the main checkout in VS Code
 
 ```powershell
-code "C:\Users\sahil\OneDrive\Documents\Projects\SQL-Playground-google-signin"
-cd "C:\Users\sahil\OneDrive\Documents\Projects\SQL-Playground-google-signin"
+code "C:\Users\sahil\OneDrive\Documents\Projects\SQL-Playground"
+cd "C:\Users\sahil\OneDrive\Documents\Projects\SQL-Playground"
 npm run setup
 npm run setup:google
 code .env
 ```
 
-Setup has already been run on this laptop. `setup:google` creates a blank local configuration only when `.env` does not exist; it never overwrites existing values. Fill secrets directly in VS Code, never in chat, screenshots or shell commands. `.env` is gitignored.
+In VS Code choose **Terminal → New Terminal → PowerShell**. Setup has already been run on this laptop; use `npm run dev` for everyday starts and leave that terminal running. `npm run setup` is for a fresh install or native-module repair. `setup:google` creates a blank local configuration only when `.env` does not exist; it never overwrites existing values. Existing configured credentials do not need to be re-entered. Fill new secrets directly in VS Code. `.env` is gitignored.
 
-| Setting         | Side-branch value                                 |
+| Setting         | Configured value                                  |
 | --------------- | ------------------------------------------------- |
 | Browser         | `http://localhost:15174`                          |
 | API             | `http://localhost:15001`                          |
@@ -24,7 +24,7 @@ Setup has already been run on this laptop. `setup:google` creates a blank local 
 | Session cookie  | `sql.google-side.sid`                             |
 | Data            | This checkout's own `server/data`                 |
 
-The normal checkout uses 15173/15000 on this laptop. Cookies do not have port boundaries, so this trial uses a different cookie name as well as separate ports and files. Do not point DATA_DIR at the main checkout's data.
+The main checkout now uses the same working ports and callback as the trial. Stop the old side checkout before starting main: run `npm run stop` from `SQL-Playground-google-signin`, then run `npm run dev` from `SQL-Playground`. Each checkout retains its own `server/data`; accounts and practice changes are not copied between them. Sign in again when switching checkouts. For simultaneous trials, use distinct ports and cookie names, separate data directories, and register each exact Google callback.
 
 ## Create Google OAuth credentials
 
@@ -69,12 +69,12 @@ See the [official OpenAI quickstart](https://developers.openai.com/api/docs/quic
 | Incomplete/expired request | Start again from Continue with Google, use localhost consistently and allow first-party cookies.                |
 | Existing-account message   | Use the existing password; account linking is not implemented.                                                  |
 | Coach stays Local Coach    | Check key, model/account access, rate limits and network availability.                                          |
-| Port occupied              | Run `npm run stop` from this side checkout; it targets only this checkout's controller.                         |
+| Port occupied              | Run `npm run stop` from the checkout currently using the ports; it targets only that checkout's controller.     |
 
-## Verification and merge decision
+## Verification
 
 `npm run check` passes **18 tests**, the client build and static-serving smoke. The four new OAuth tests replace only Google's network transport. Real Passport state verification, profile parsing, account creation, sessions, repeat login, logout, workspace persistence and isolation execute normally. They also cover account collisions, missing/wrong/cross-session/replayed state, cancellation and token failure. No mocked provider is enabled in the running demo.
 
-**Real Google consent/token exchange and valid-key OpenAI generation remain unverified** until credentials are supplied locally and the live trial is completed. Simulated-provider success is not a live Google success claim.
+On 25 September 2026, the live Google flow completed using a locally supplied OAuth client. The browser opened the authenticated Practice page, ran the sample JOIN successfully and retained the session after reload. Credentials remain in the ignored `.env`. **Valid-key OpenAI generation remains unverified**; Google login does not require it.
 
-Before choosing to merge, verify real Google sign-in and persistence; cancellation; local login still works; both localhost checkouts stay signed in independently; and the AI Coach label if configured. Leave the branch unmerged until you approve the result.
+Automated tests cover repeat login, workspace persistence, cancellation and local login recovery. These simulated-provider tests are distinct from the live Google browser checks described above.

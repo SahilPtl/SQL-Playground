@@ -1,14 +1,14 @@
 # Optional integrations
 
-For this side branch, use [the step-by-step trial guide](GOOGLE_SIGNIN_TRIAL.md): separate checkout, ports **15174/15001**, Google credentials, OpenAI key creation and live test checklist. The standard setup below describes the normal checkout's ports.
+Use [the step-by-step setup guide](GOOGLE_SIGNIN_TRIAL.md) for the configured main checkout, ports **15174/15001**, Google credentials and OpenAI key creation.
 
 No `.env` is needed for local signup, login, SQL, Practice, Interview or Local Coach. Leave `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `OPENAI_API_KEY` blank in `.env.example`. Never prefix secrets with `VITE_`.
 
-## Google OAuth setup (implemented, live flow unverified)
+## Google OAuth setup (live local sign-in verified)
 
 1. In Google Cloud Console, choose your own project, configure the Google Auth Platform consent screen, and add your account as a test user while the app is in testing.
-2. Create an OAuth client of type **Web application**. Set the JavaScript origin to `http://localhost:15173` and the authorized redirect URI to `http://localhost:15000/api/auth/google/callback` for this laptop. If using standard ports elsewhere, use frontend 5173 and callback port 5000 consistently.
-3. Copy the root `.env.example` to `.env` locally. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to the issued values. Keep `GOOGLE_CALLBACK_URL=http://localhost:15000/api/auth/google/callback`. Do not commit `.env`.
+2. Create an OAuth client of type **Web application**. Set the JavaScript origin to `http://localhost:15174` and the authorized redirect URI to `http://localhost:15001/api/auth/google/callback` for this laptop. If using different ports elsewhere, match the frontend origin and API callback consistently.
+3. Run `npm run setup:google` to create `.env` if absent. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to the issued values. Keep `GOOGLE_CALLBACK_URL=http://localhost:15001/api/auth/google/callback`. Do not commit `.env` or overwrite an already configured file.
 4. Stop and restart the demo. The Google button is enabled only when ID, secret and HTTP(S) callback configuration are present; otherwise it is disabled with an explanation.
 5. Use Continue with Google. The strategy requests `profile` and `email`, verifies OAuth state, and establishes the same Passport session used by local login.
 
@@ -16,7 +16,7 @@ Callback errors return to the login page with safe error codes for cancellation,
 
 Accounts are keyed by Google profile ID. Existing local accounts are never silently linked on an email claim. A verified-email collision returns login failure; automatic account linking is not implemented. Missing verified email can produce a Google-only account with a null email. Access/refresh tokens are not stored.
 
-Verified: conditional route registration, authorization redirect construction, denied callback recovery, and continued local login with intentionally invalid configuration. **Unverified: successful Google consent, token exchange and profile retrieval**, because no valid credentials were provided. Setup follows the [Passport strategy documentation](https://www.passportjs.org/packages/passport-google-oauth20/).
+Verified: conditional route registration, authorization redirect construction, denied callback recovery, and continued local login with intentionally invalid configuration. Live Google sign-in completed on 25 September 2026; the authenticated workspace ran SQL and retained its session after reload. Setup follows the [Passport strategy documentation](https://www.passportjs.org/packages/passport-google-oauth20/).
 
 ## OpenAI (implemented, valid-key flow unverified)
 

@@ -2,8 +2,8 @@ import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const envFile = fileURLToPath(new URL("../.env", import.meta.url));
-// Separate ports, files and cookie keep this checkout independent from main.
-const template = `# Local side-branch testing. Never commit this file.
+// Match the tested Google callback; run one checkout on these ports at a time.
+const template = `# Local Google sign-in configuration. Never commit this file.
 PORT=15001
 FRONTEND_PORT=15174
 CLIENT_URL=http://localhost:15174
@@ -16,7 +16,7 @@ OPENAI_MODEL=gpt-4.1-mini
 `;
 try {
   writeFileSync(envFile, template, { flag: "wx", mode: 0o600 });
-  console.log("Created a private .env for the Google side-branch demo.");
+  console.log("Created a private .env for local Google sign-in.");
 } catch (error) {
   if (error.code !== "EEXIST") throw error;
   console.log("Existing .env preserved; no values were changed.");

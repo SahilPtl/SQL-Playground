@@ -1,6 +1,6 @@
 # SQL Playground
 
-**Google sign-in trial branch:** see [GOOGLE_SIGNIN_TRIAL.md](docs/GOOGLE_SIGNIN_TRIAL.md) for the separate checkout on ports **15174/15001**, Google OAuth setup and OpenAI API key instructions. Leave this branch unmerged until the live trial is approved.
+**Google sign-in:** see [the setup guide](docs/GOOGLE_SIGNIN_TRIAL.md) for the tested configuration on ports **15174/15001**, Google OAuth setup and optional OpenAI API key instructions.
 
 A real SQL learning workspace: four-pane React IDE, persistent SQLite database per user, eight timed challenges with server-held grading datasets, and an offline Local Coach. Rebuilt with Codex assistance on **25 September 2026 (Asia/Kolkata)**. Earlier repository history is preserved; see [the honest rebuild record](docs/REBUILD.md).
 
@@ -22,9 +22,9 @@ npm run demo
 
 `npm run setup` is the one-time clean install/native-module check. It needs npm registry access. After setup, **`npm run demo` is the single start command**; `npm run dev` is an identical alias. It seeds idempotently, starts both services, waits for health checks and prints the URL. No Docker, Google credentials, OpenAI key, `.env`, or separate database service is required.
 
-**Open [http://localhost:15173](http://localhost:15173).** Demo login: `demo@example.test` / `Playground2026!`, or press **Explore the local demo**. API health: [http://localhost:15000/api/health](http://localhost:15000/api/health).
+**With the configured Google `.env` on this laptop, open [http://localhost:15174](http://localhost:15174).** API health: [http://localhost:15001/api/health](http://localhost:15001/api/health). Choose **Continue with Google**, or use the demo login: `demo@example.test` / `Playground2026!`. Keep this terminal running. After dependencies are installed, future starts only need `npm run dev`.
 
-The normal defaults are frontend **5173** and API **5000**. Windows on this laptop reserves both ports, so the launcher detects EACCES and selects **15173 / 15000**. It does not change Windows networking or silently bypass an occupied port. On a machine without that reservation, the printed URL is `http://localhost:5173`.
+Without `.env` port overrides, the normal defaults are frontend **5173** and API **5000**. Windows on this laptop reserves both ports, so the launcher detects EACCES and selects **15173 / 15000**. The configured Google flow instead uses explicit **15174 / 15001** ports to match the registered callback. Only run one checkout on those ports at a time. The launcher does not bypass an occupied port; use the URL it prints.
 
 Node **24 LTS** is recommended. This laptop's system Node is 20.16; the checked-in launcher can use the already-installed Codex Node 24 runtime as a local convenience. On other machines install Node 24 LTS before setup. Use the same Node for installation and running native dependencies. The runtime itself is not committed or downloaded by the launcher.
 
@@ -58,7 +58,7 @@ The CLI refuses while demo ports are listening. It moves `server/data` into a ti
 - Optional Google OAuth routes/button enabled only with complete configuration.
 - Bounded worker processes, input/output/storage limits, restricted SQL commands, Origin policy, Helmet and throttling. This is **not yet a public hostile-user sandbox**.
 
-See [VERIFICATION.md](docs/VERIFICATION.md) for the explicit distinction between verified, unverified and planned features. Successful live Google OAuth and valid-key OpenAI remain **unverified**. Public hosting/tunnel is **blocked pending stronger worker isolation**; [DEPLOYMENT.md](docs/DEPLOYMENT.md) explains why.
+See [VERIFICATION.md](docs/VERIFICATION.md) for verified, unverified and planned features. Live Google sign-in, authenticated SQL execution and session retention after reload were verified locally. Valid-key OpenAI generation remains **unverified**. Public hosting/tunnel is **blocked pending stronger worker isolation**; [DEPLOYMENT.md](docs/DEPLOYMENT.md) explains why.
 
 ## Architecture
 
